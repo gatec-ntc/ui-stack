@@ -1,12 +1,18 @@
 
-import React from 'react'
+import React, { PureComponent } from 'react'
 import { FormattedMessage } from 'react-intl'
 
 import { getIntl } from './intl'
 
-const KeyWrapper = props => props.children
+class KeyWrapper extends PureComponent {
+    render() {
+        return this.props.children
+    }
+}
 
-export default function formatMessage(key, values, opt = {}) {
+export default formatMessage
+
+export function formatMessage(key, values, opt = {}) {
     if (!key)
         return ''
     const intl = getIntl()
