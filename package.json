@@ -16,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/gatec-ntc/ui-stack/issues"
   },
-  "homepage": "https://github.com/gatec-ntc/ui-stack"
+  "homepage": "https://github.com/gatec-ntc/ui-stack",
+  "peerDependencies": {
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-intl": "^2.3.0"
+  }
 }
