@@ -4,6 +4,7 @@ import isIntlLocaleSupported from 'intl-locales-supported'
 import { detectLanguage, getLocales } from './index'
 
 const loadedLanguages = {}
+const languageLoadPromises = {}
 
 function loadIntlPolyfill(locale) {
 
@@ -45,10 +46,14 @@ export function loadLanguage(lang, extraLoad = null) {
     if (loadedLanguage)
         return Promise.resolve(loadedLanguage)
 
+    let languageLoadPromise = languageLoadPromises[language]
+    if (languageLoadPromise)
+        return languageLoadPromise
+
     const locales = getLocales()
     const locale = locales[language]
 
-    return loadIntlPolyfill(language)
+    languageLoadPromises[language] = loadIntlPolyfill(language)
         .then(() => loadAll(locale.loaders, extraLoad))
         .then(([messages]) => {
 
@@ -59,4 +64,6 @@ export function loadLanguage(lang, extraLoad = null) {
 
             return loadedLanguages[language]
         })
+
+    return languageLoadPromises[language]
 }
