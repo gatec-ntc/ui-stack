@@ -1,0 +1,20 @@
+{
+  "name": "ui-stack",
+  "version": "0.1.0",
+  "description": "Utility functions for React app development",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gatec-ntc/ui-stack.git"
+  },
+  "keywords": [
+    "react",
+    "ui"
+  ],
+  "author": "Bruno Assarisse <bruno@gatec.com.br>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gatec-ntc/ui-stack/issues"
+  },
+  "homepage": "https://github.com/gatec-ntc/ui-stack"
+}
