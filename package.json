@@ -23,5 +23,8 @@
     "prop-types": "^15.5.10",
     "react": "^15.6.1",
     "react-intl": "^2.3.0"
+  },
+  "dependencies": {
+    "superagent": "^3.6.0"
   }
 }
