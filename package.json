@@ -1,7 +1,7 @@
 {
   "name": "ui-stack",
   "version": "0.1.0",
-  "description": "Utility functions for React app development",
+  "description": "Utilities for React app dev and JS in general",
   "main": "index.js",
   "repository": {
     "type": "git",

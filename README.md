@@ -1,4 +1,4 @@
 
 # ui-stack
 
-- Utility functions and helpers for React app development, made in [GAtec](http://www.gatec.com.br/)
+- Utility functions, helpers and components for React app development and Javascript in general, made in [GAtec](http://www.gatec.com.br/)
