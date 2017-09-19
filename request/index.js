@@ -57,5 +57,3 @@ export function fetch({ method, url, query, data, type, headers }) {
 
     return abortablePromise
 }
-
-export default fetch
