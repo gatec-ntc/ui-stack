@@ -20,12 +20,11 @@
   "peerDependencies": {
     "intl": "^1.2.5",
     "intl-locales-supported": "^1.0.0",
-    "prop-types": "^15.5.10",
+    "prop-types": "^15.6.0",
     "react": "^15.6.1",
     "react-intl": "^2.3.0"
   },
   "dependencies": {
-    "prop-types": "^15.6.0",
     "superagent": "^3.6.0"
   }
 }
