@@ -24,6 +24,7 @@ class ImageLoader extends React.Component {
         asBackground: PropTypes.bool,
         disableDefault: PropTypes.bool,
         avoidMaxHeight: PropTypes.bool,
+        handleProps: PropTypes.func,
     }
 
     state = {
@@ -43,9 +44,10 @@ class ImageLoader extends React.Component {
 
     load() {
 
-        if (!this.state.loading) {
+        if (!this.state.loading || this.state.error) {
             this.setState({
                 loading: true,
+                error: null,
             })
         }
 
@@ -64,7 +66,7 @@ class ImageLoader extends React.Component {
                     return
                 this.setState({
                     loading: false,
-                    error: true,
+                    error: error,
                 })
             })
 
@@ -89,20 +91,33 @@ class ImageLoader extends React.Component {
         const { errorSrc } = this.props
         return errorSrc || errorImg
     }
+
+    handleImageProps(imgProps) {
+
+        const {
+            handleProps, // eslint-disable-line no-unused-vars
+        } = this.props
+
+        return handleProps ? handleProps(imgProps, this.state) : imgProps
+    }
+
     render() {
 
         const {
-            src, // eslint-disable-line no-unused-vars
-            errorSrc, // eslint-disable-line no-unused-vars
-            loadingSrc, // eslint-disable-line no-unused-vars
-            defaultSrc, // eslint-disable-line no-unused-vars
-            disableDefault, // eslint-disable-line no-unused-vars
-            children,
+            /* eslint-disable no-unused-vars */
+            src,
+            errorSrc,
+            loadingSrc,
+            defaultSrc,
+            disableDefault,
+            handleProps,
+            /* eslint-enable no-unused-vars */
             defaultSize,
-            className,
             asBackground,
             avoidMaxHeight,
+            className,
             style = {},
+            children,
             ...otherProps,
         } = this.props
 
@@ -125,11 +140,14 @@ class ImageLoader extends React.Component {
 
             const bgClassName = `${loading || error ? styles.bgLoading : styles.bgImg} ${className || ''}`
 
-            return (
-                <span className={bgClassName} style={bgImgStyles} {...otherProps}>
-                    {otherProps.dangerouslySetInnerHTML ? null : (children || <img src={imageSrc} className={styles.hiddenImg} />)}
-                </span>
-            )
+            const bgImgProps = {
+                className: bgClassName,
+                style: bgImgStyles,
+                children: otherProps.dangerouslySetInnerHTML ? null : (children || <img src={imageSrc} className={styles.hiddenImg} />),
+                ...otherProps,
+            }
+
+            return <span {...this.handleImageProps(bgImgProps)} />
         }
 
         delete otherProps.dangerouslySetInnerHTML
@@ -143,7 +161,14 @@ class ImageLoader extends React.Component {
 
         const imgClassName = `${loading || error ? styles.loading : styles.img} ${className || ''}`
 
-        return <img className={imgClassName} style={imgStyles} src={imageSrc} {...otherProps} />
+        const imgProps = {
+            className: imgClassName,
+            style: imgStyles,
+            src: imageSrc,
+            ...otherProps,
+        }
+
+        return <img {...this.handleImageProps(imgProps)} />
     }
 
 }
