@@ -102,6 +102,7 @@ class ImageLoader extends React.Component {
             className,
             asBackground,
             avoidMaxHeight,
+            style = {},
             ...otherProps,
         } = this.props
 
@@ -115,7 +116,9 @@ class ImageLoader extends React.Component {
 
         if (asBackground) {
 
-            var bgImgStyles = {}
+            var bgImgStyles = {
+                ...style,
+            }
 
             if (imageSrc)
                 bgImgStyles.backgroundImage = `url(${imageSrc})`
@@ -123,7 +126,7 @@ class ImageLoader extends React.Component {
             const bgClassName = `${loading || error ? styles.bgLoading : styles.bgImg} ${className || ''}`
 
             return (
-                <span {...otherProps} className={bgClassName} style={bgImgStyles}>
+                <span className={bgClassName} style={bgImgStyles} {...otherProps}>
                     {otherProps.dangerouslySetInnerHTML ? null : (children || <img src={imageSrc} className={styles.hiddenImg} />)}
                 </span>
             )
@@ -131,14 +134,16 @@ class ImageLoader extends React.Component {
 
         delete otherProps.dangerouslySetInnerHTML
 
-        var imgStyles = {}
+        var imgStyles = {
+            ...style,
+        }
 
         if (!avoidMaxHeight || loading)
             imgStyles.maxHeight = `${height || defaultSize || defaultImageSize}px`
 
         const imgClassName = `${loading || error ? styles.loading : styles.img} ${className || ''}`
 
-        return <img {...otherProps} className={imgClassName} style={imgStyles} src={imageSrc} />
+        return <img className={imgClassName} style={imgStyles} src={imageSrc} {...otherProps} />
     }
 
 }
