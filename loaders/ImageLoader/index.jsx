@@ -38,11 +38,28 @@ class ImageLoader extends React.Component {
         if (!this.state.loading)
             return
 
-        this.load()
+        this.load(this.getImageUrl())
 
     }
 
-    load() {
+    componentWillUnmount() {
+        this.abortRequest()
+    }
+
+    componentWillReceiveProps(nextProps) {
+
+        if (this.props.src !== nextProps.src)
+            this.load(this.getImageUrl(nextProps))
+
+    }
+
+    abortRequest() {
+        if (this.imageRequest && this.imageRequest.abort)
+            this.imageRequest.abort()
+        this.imageRequest = null
+    }
+
+    load(imageUrl) {
 
         if (!this.state.loading || this.state.error) {
             this.setState({
@@ -51,7 +68,7 @@ class ImageLoader extends React.Component {
             })
         }
 
-        this.imageRequest = loadImage(this.getImageUrl())
+        this.imageRequest = loadImage(imageUrl)
 
         this.imageRequest
             .then(image => {
@@ -72,23 +89,21 @@ class ImageLoader extends React.Component {
 
     }
 
-    componentWillUnmount() {
-        if (this.imageRequest && this.imageRequest.abort)
-            this.imageRequest.abort()
-    }
-
-    getImageUrl() {
-        const { src, defaultSrc, disableDefault } = this.props
+    getImageUrl(props) {
+        const propsToUse = props || this.props
+        const { src, defaultSrc, disableDefault } = propsToUse
         return src || (disableDefault ? '' : defaultSrc || placeholderImg)
     }
 
-    getLoadingUrl() {
-        const { loadingSrc } = this.props
+    getLoadingUrl(props) {
+        const propsToUse = props || this.props
+        const { loadingSrc } = propsToUse
         return loadingSrc || loadingImg
     }
 
-    getErrorUrl() {
-        const { errorSrc } = this.props
+    getErrorUrl(props) {
+        const propsToUse = props || this.props
+        const { errorSrc } = propsToUse
         return errorSrc || errorImg
     }
 
@@ -138,10 +153,16 @@ class ImageLoader extends React.Component {
             if (imageSrc)
                 bgImgStyles.backgroundImage = `url(${imageSrc})`
 
-            const bgClassName = `${loading || error ? styles.bgLoading : styles.bgImg} ${className || ''}`
+            var bgClassName = ''
+            if (loading)
+                bgClassName = styles.bgLoading
+            else if (error)
+                bgClassName = styles.bgError
+            else
+                bgClassName = styles.bgImg
 
             const bgImgProps = {
-                className: bgClassName,
+                className: `${bgClassName} ${className || ''}`,
                 style: bgImgStyles,
                 children: otherProps.dangerouslySetInnerHTML ? null : (children || <img src={imageSrc} className={styles.hiddenImg} />),
                 ...otherProps,
@@ -159,10 +180,16 @@ class ImageLoader extends React.Component {
         if (!avoidMaxHeight || loading)
             imgStyles.maxHeight = `${height || defaultSize || defaultImageSize}px`
 
-        const imgClassName = `${loading || error ? styles.loading : styles.img} ${className || ''}`
+        var imgClassName = ''
+        if (loading)
+            imgClassName = styles.loading
+        else if (error)
+            imgClassName = styles.error
+        else
+            imgClassName = styles.img
 
         const imgProps = {
-            className: imgClassName,
+            className: `${imgClassName} ${className || ''}`,
             style: imgStyles,
             src: imageSrc,
             ...otherProps,
