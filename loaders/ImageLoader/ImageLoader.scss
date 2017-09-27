@@ -21,6 +21,11 @@ $loadingSize: 65%;
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
+
+    .hiddenImg {
+        display: none;
+    }
+
 }
 
 .bgLoading, .bgError {
@@ -29,8 +34,4 @@ $loadingSize: 65%;
 
 .bgLoading, .loading {
     transition-duration: 0s !important;
-}
-
-.hiddenImg {
-    display: none;
 }
