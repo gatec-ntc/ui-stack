@@ -68,6 +68,8 @@ class ImageLoader extends React.Component {
             })
         }
 
+        this.abortRequest()
+
         this.imageRequest = loadImage(imageUrl)
 
         this.imageRequest
