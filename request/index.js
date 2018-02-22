@@ -57,3 +57,36 @@ export function fetch({ method, url, query, data, type, headers }) {
 
     return abortablePromise
 }
+
+export function get(opt) {
+    return fetch({
+        ...opt,
+        method: 'get',
+    })
+}
+
+export function post(opt) {
+    return fetch({
+        ...opt,
+        method: 'post',
+    })
+}
+
+export function put(opt) {
+    return fetch({
+        ...opt,
+        method: 'put',
+    })
+}
+
+export function head(opt) {
+    return fetch({
+        ...opt,
+        method: 'head',
+    })
+}
+
+fetch.get = get
+fetch.post = post
+fetch.put = put
+fetch.head = head
