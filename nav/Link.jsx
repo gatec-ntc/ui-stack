@@ -13,20 +13,14 @@ const OptionalLink = props => {
         internal,
         eventLabel,
         activeClassName,
-        style,
         ...otherProps,
     } = props
 
-    var linkStyle = {
-        position: 'relative',
-        ...style,
-    }
-
     if (href) {
         if (internal) {
-            return <a style={linkStyle} href={href} {...otherProps} />
+            return <a href={href} {...otherProps} />
         } else {
-            return <OutboundLink style={linkStyle} eventLabel={eventLabel || otherProps.title || href} to={href} target={target || '_blank'} {...otherProps} />
+            return <OutboundLink eventLabel={eventLabel || otherProps.title || href} to={href} target={target || '_blank'} {...otherProps} />
         }
     }
 
@@ -43,16 +37,16 @@ const OptionalLink = props => {
                 <Route path={to}>
                     {({ match }) => {
                         var finalClassName = match ? `${className || ''} ${activeClassName || ''}` : className
-                        return <Link style={linkStyle} to={to} className={finalClassName} {...finalProps} />
+                        return <Link to={to} className={finalClassName} {...finalProps} />
                     }}
                 </Route>
             )
         }
 
-        return <Link style={linkStyle} to={to} {...otherProps} />
+        return <Link to={to} {...otherProps} />
     }
 
-    return <span style={linkStyle} {...otherProps} />
+    return <span {...otherProps} />
 }
 
 export default OptionalLink
