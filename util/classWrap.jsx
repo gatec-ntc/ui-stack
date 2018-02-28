@@ -1,8 +1,8 @@
 
 import React from 'react'
 
-function ClassWrapFactory(Component, addClassName, addProps) {
-    return function ClassWrap(props) {
+function classWrapFactory(Component, addClassName, addProps) {
+    return function classWrap(props) {
 
         const {
             className,
@@ -19,5 +19,4 @@ function ClassWrapFactory(Component, addClassName, addProps) {
     }
 }
 
-export default ClassWrapFactory
-export { ClassWrapFactory as ClassWrap }
+export { classWrapFactory as classWrap }
