@@ -9,13 +9,17 @@ function classWrapFactory(Component, addClassName, addProps) {
             ...otherProps,
         } = props
 
+        const hasPropHandler = typeof addProps === 'function'
+
+        const extraProps = hasPropHandler ? {} : addProps
+
         const newProps = {
-            className: `${addClassName}${className ? ' ' + className : ''}`,
+            className: `${addClassName}${className && className.trim() ? ' ' + className : ''}`,
             ...otherProps,
-            ...addProps,
+            ...extraProps,
         }
 
-        return React.createElement(Component, newProps)
+        return React.createElement(Component, hasPropHandler ? addProps(newProps) : newProps)
     }
 }
 
