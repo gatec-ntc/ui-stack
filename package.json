@@ -1,6 +1,6 @@
 {
   "name": "ui-stack",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Utilities for React app dev and JS in general",
   "main": "index.js",
   "repository": {
@@ -19,7 +19,7 @@
   "homepage": "https://github.com/gatec-ntc/ui-stack",
   "peerDependencies": {
     "prop-types": "^15.6.0",
-    "react": "^15.6.1"
+    "react": "^15.6.1 || ^16.2.0"
   },
   "dependencies": {
     "deep-equal": "^1.0.1",
