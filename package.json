@@ -31,6 +31,7 @@
     "intl-locales-supported": "^1.0.0",
     "react-ga": "^2.3.5",
     "react-intl": "^2.3.0",
-    "react-router-dom": "^4.2.2"
+    "react-router-dom": "^4.2.2",
+    "font-awesome": "^4.7.0"
   }
 }
