@@ -22,6 +22,10 @@ class LanguageLoader extends React.Component {
         this.loadLanguage(this.props.language)
     }
 
+    componentWillUnmount() {
+        this._isUnmounted = true
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.language !== this.props.language) {
             this.language = null
@@ -41,6 +45,8 @@ class LanguageLoader extends React.Component {
 
         loadLanguage(language, this.props.extraLoad)
             .then(locale => {
+                if (this._isUnmounted)
+                    return
                 this.setState({
                     loading: false,
                     loaded: true,
@@ -49,7 +55,7 @@ class LanguageLoader extends React.Component {
                 })
             })
             .catch(error => {
-                if (error.isAborted)
+                if (error.isAborted || this._isUnmounted)
                     return
                 this.setState({
                     loading: false,
