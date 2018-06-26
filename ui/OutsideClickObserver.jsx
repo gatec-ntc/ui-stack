@@ -2,7 +2,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-export class OutsideClickObserver extends Component {
+export default class OutsideClickObserver extends Component {
 
     static propTypes = {
         action: PropTypes.func,

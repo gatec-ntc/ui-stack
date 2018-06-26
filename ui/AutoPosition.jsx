@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 
 import { getElementX, getElementRightX, isOncreenX, getElementY, getElementBottomY, isOncreenY } from '../util/element'
 
-export class AutoPosition extends Component {
+export default class AutoPosition extends Component {
 
     static propTypes = {
         element: PropTypes.node,
