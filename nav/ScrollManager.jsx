@@ -58,11 +58,8 @@ class ScrollManager extends React.Component {
             this.scrollTargets.splice(index, 1)
     }
 
-    componentWillMount() {
-        this.listenScroll()
-    }
-
     componentDidMount() {
+        this.listenScroll()
         this.onPop(this.props)
     }
 
@@ -70,18 +67,18 @@ class ScrollManager extends React.Component {
         this.unlistenScroll()
     }
 
-    componentWillReceiveProps(nextProps) {
-        switch (nextProps.history.action) {
+    componentDidUpdate() {
+        switch (this.props.history.action) {
         case 'PUSH':
             this.onPush()
             break
         case 'POP':
-            this.onPop(nextProps)
+            this.onPop(this.props)
             break
         case 'REPLACE':
             break
         default:
-            //console.warn(`Unrecognized location change action! "${nextProps.history.action}"`)
+            //console.warn(`Unrecognized location change action! "${this.props.history.action}"`)
             break
         }
     }

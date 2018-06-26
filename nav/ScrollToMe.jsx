@@ -9,11 +9,6 @@ class ScrollToMe extends React.Component {
         removeScrollTarget: PropTypes.func,
     }
 
-    componentWillReceiveProps() {
-        if (!this.props.avoidAutoScroll)
-            this.scroll()
-    }
-
     componentDidMount() {
         if (this.context.addScrollTarget)
             this.context.addScrollTarget(this)
@@ -24,6 +19,11 @@ class ScrollToMe extends React.Component {
     componentWillUnmount() {
         if (this.context.removeScrollTarget)
             this.context.removeScrollTarget(this)
+    }
+
+    componentDidUpdate() {
+        if (!this.props.avoidAutoScroll)
+            this.scroll()
     }
 
     receiveRootElement = (rootElement) => {

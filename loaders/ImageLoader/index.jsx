@@ -46,11 +46,9 @@ class ImageLoader extends React.Component {
         this.abortRequest()
     }
 
-    componentWillReceiveProps(nextProps) {
-
-        if (this.props.src !== nextProps.src)
-            this.load(this.getImageUrl(nextProps))
-
+    componentDidUpdate(prevProps) {
+        if (this.props.src !== prevProps.src)
+            this.load(this.getImageUrl(this.props))
     }
 
     abortRequest() {

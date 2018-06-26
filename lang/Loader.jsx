@@ -26,10 +26,10 @@ class LanguageLoader extends React.Component {
         this._isUnmounted = true
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.language !== this.props.language) {
+    componentDidUpdate(prevProps) {
+        if (this.props.language !== prevProps.language) {
             this.language = null
-            this.loadLanguage(nextProps.language)
+            this.loadLanguage(this.props.language)
         }
     }
 
