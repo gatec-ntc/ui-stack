@@ -7,6 +7,10 @@
     "type": "git",
     "url": "git+https://github.com/gatec-ntc/ui-stack.git"
   },
+  "scripts": {
+    "fix-js": "eslint --fix --ext .js,.jsx ./ || true",
+    "lint-js": "eslint --ext .js,.jsx ./ || true"
+  },
   "keywords": [
     "react",
     "ui"
@@ -27,11 +31,19 @@
     "superagent": "^3.6.0"
   },
   "optionalDependencies": {
+    "font-awesome": "^4.7.0",
     "intl": "^1.2.5",
     "intl-locales-supported": "^1.0.0",
     "react-ga": "^2.3.5",
     "react-intl": "^2.3.0",
-    "react-router-dom": "^4.2.2",
-    "font-awesome": "^4.7.0"
+    "react-router-dom": "^4.2.2"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.5",
+    "eslint": "^5.0.1",
+    "eslint-import-resolver-webpack": "^0.10.1",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-react": "^7.10.0",
+    "webpack": "^4.12.1"
   }
 }

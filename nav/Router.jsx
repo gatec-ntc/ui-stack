@@ -38,7 +38,7 @@ const Router = props => {
     const {
         children,
         handleScroll,
-        ...otherProps,
+        ...otherProps
     } = props
 
     return (

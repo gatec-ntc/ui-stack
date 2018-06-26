@@ -13,7 +13,7 @@ export default function Icon(props) {
         stackExtra,
         stackInvert,
         children,
-        ...otherProps,
+        ...otherProps
     } = props
 
     let finalIconName = handleIconClassName(name, extra)

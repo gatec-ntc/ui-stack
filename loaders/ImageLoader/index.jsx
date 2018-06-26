@@ -135,7 +135,7 @@ class ImageLoader extends React.Component {
             className,
             style = {},
             children,
-            ...otherProps,
+            ...otherProps
         } = this.props
 
         const {
@@ -167,7 +167,7 @@ class ImageLoader extends React.Component {
                 className: `${bgClassName} ${className || ''}`,
                 style: bgImgStyles,
                 children: otherProps.dangerouslySetInnerHTML ? null : (children || <img src={imageSrc} className={styles.hiddenImg} />),
-                ...otherProps,
+                ...otherProps
             }
 
             return <span {...this.handleImageProps(bgImgProps)} />
@@ -194,7 +194,7 @@ class ImageLoader extends React.Component {
             className: `${imgClassName} ${className || ''}`,
             style: imgStyles,
             src: imageSrc,
-            ...otherProps,
+            ...otherProps
         }
 
         return <img {...this.handleImageProps(imgProps)} />

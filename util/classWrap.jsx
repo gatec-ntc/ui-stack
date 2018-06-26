@@ -6,7 +6,7 @@ function classWrapFactory(Component, addClassName, addProps) {
 
         const {
             className,
-            ...otherProps,
+            ...otherProps
         } = props
 
         const hasPropHandler = typeof addProps === 'function'

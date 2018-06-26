@@ -56,7 +56,7 @@ class ScrollToMe extends React.Component {
             element = 'div',
             avoidAutoScroll, // eslint-disable-line no-unused-vars
             shouldScroll, // eslint-disable-line no-unused-vars
-            ...otherProps,
+            ...otherProps
         } = this.props
 
         otherProps.ref = this.receiveRootElement

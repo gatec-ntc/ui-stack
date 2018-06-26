@@ -13,7 +13,7 @@ const OptionalLink = props => {
         internal,
         eventLabel,
         activeClassName,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (href) {
@@ -30,7 +30,7 @@ const OptionalLink = props => {
 
             const {
                 className,
-                ...finalProps,
+                ...finalProps
             } = otherProps
 
             return (
