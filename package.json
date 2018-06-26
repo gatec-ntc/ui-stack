@@ -1,6 +1,6 @@
 {
   "name": "ui-stack",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "Utilities for React app dev and JS in general",
   "main": "index.js",
   "repository": {
@@ -34,7 +34,7 @@
     "font-awesome": "^4.7.0",
     "intl": "^1.2.5",
     "intl-locales-supported": "^1.0.0",
-    "react-ga": "^2.3.5",
+    "react-ga": "^2.5.3",
     "react-intl": "^2.3.0",
     "react-router-dom": "^4.2.2"
   },
