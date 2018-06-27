@@ -18,7 +18,8 @@ export default class Portal extends Component {
         super(props)
 
         this._target = document.createElement('div')
-        this._target.className = this.props.className || ''
+        if (this.props.className)
+            this._target.className = this.props.className
 
     }
 
@@ -33,8 +34,8 @@ export default class Portal extends Component {
 
     componentDidUpdate() {
 
-        if (this._target)
-            this._target.className = this.props.className || ''
+        if (this._target && this.props.className)
+            this._target.className = this.props.className
 
     }
 
