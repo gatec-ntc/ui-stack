@@ -1,4 +1,7 @@
 
+const supportPageOffset = window.pageXOffset !== undefined
+const isCSS1Compat = ((document.compatMode || '') === 'CSS1Compat')
+
 export function getElementX(el) {
 
     var xPos = el.offsetLeft
@@ -34,9 +37,11 @@ export function getElementBottomY(el, elementY = getElementY(el)) {
 }
 
 export function isOncreenX(x) {
-    return x >= 0 && x <= window.innerWidth
+    const scrollX = supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft
+    return x >= scrollX && x <= scrollX + window.innerWidth
 }
 
 export function isOncreenY(y) {
-    return y >= 0 && y <= window.innerHeight
+    const scrollY = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop
+    return y >= scrollY && y <= scrollY + window.innerHeight
 }
