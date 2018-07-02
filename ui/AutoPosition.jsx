@@ -21,13 +21,9 @@ export default class AutoPosition extends Component {
         maxPositionUpdateTries: PropTypes.number,
     }
 
-    container = null
-
-    state = {}
-
     static getDerivedStateFromProps(nextProps, prevState) {
 
-        if (prevState && prevState.wantedTop === nextProps.top && prevState.wantedLeft === nextProps.left)
+        if (prevState.wantedTop === nextProps.top && prevState.wantedLeft === nextProps.left)
             return null
 
         return {
@@ -38,6 +34,10 @@ export default class AutoPosition extends Component {
             positionUpdateCount: 0,
         }
     }
+
+    state = {}
+
+    container = null
 
     componentDidMount() {
         this.updatePosition()
