@@ -15,22 +15,48 @@ export default class AutoPosition extends Component {
             bottom: PropTypes.string,
             left: PropTypes.string,
             right: PropTypes.string,
+            centerX: PropTypes.string,
+            centerY: PropTypes.string,
         }),
-        top: PropTypes.bool,
-        left: PropTypes.bool,
+        x: PropTypes.oneOf(['before', 'center', 'after', 'left', 'right']),
+        y: PropTypes.oneOf(['before', 'center', 'after', 'top', 'bottom']),
+        allowXCenter: PropTypes.bool,
+        allowYCenter: PropTypes.bool,
         maxPositionUpdateTries: PropTypes.number,
     }
 
     static getDerivedStateFromProps(nextProps, prevState) {
 
-        if (prevState.wantedTop === nextProps.top && prevState.wantedLeft === nextProps.left)
+        if (prevState.wantedX === nextProps.x &&
+            prevState.wantedY === nextProps.y &&
+            prevState.wantedAllowXCenter === nextProps.allowXCenter &&
+            prevState.wantedAllowYCenter === nextProps.allowYCenter)
             return null
 
+        var {
+            x,
+            y,
+        } = nextProps
+
+        if (x === 'left')
+            x = 'before'
+        else if (x === 'right')
+            x = 'after'
+
+        if (y === 'top')
+            y = 'before'
+        else if (y === 'bottom')
+            y = 'after'
+
         return {
-            wantedTop: nextProps.top,
-            wantedLeft: nextProps.left,
-            top: nextProps.top || false,
-            left: nextProps.left || false,
+            wantedX: nextProps.x,
+            wantedY: nextProps.y,
+            wantedAllowXCenter: nextProps.allowXCenter,
+            wantedAllowYCenter: nextProps.allowYCenter,
+            x: x || 'after',
+            y: y || 'after',
+            allowXCenter: nextProps.allowXCenter || false,
+            allowYCenter: nextProps.allowYCenter || false,
             positionUpdateCount: 0,
         }
     }
@@ -54,8 +80,10 @@ export default class AutoPosition extends Component {
             /* eslint-disable no-unused-vars */
             positionClassNames,
             className,
-            top,
-            left,
+            x,
+            y,
+            allowXCenter,
+            allowYCenter,
             maxPositionUpdateTries,
             /* eslint-enable no-unused-vars */
             ...otherProps
@@ -78,11 +106,27 @@ export default class AutoPosition extends Component {
         } = this.props
 
         const {
-            top,
-            left,
+            x,
+            y,
         } = this.state
 
-        return `${positionClassNames.main || ''} ${top ? positionClassNames.top || '' : positionClassNames.bottom || ''} ${left ? positionClassNames.left || '' : positionClassNames.right || ''} ${className || ''}`
+        var xClass
+        if (x === 'before')
+            xClass = 'left'
+        else if (x === 'center')
+            xClass = 'centerX'
+        else if (x === 'after')
+            xClass = 'right'
+
+        var yClass
+        if (y === 'before')
+            yClass = 'top'
+        else if (y === 'center')
+            yClass = 'centerY'
+        else if (y === 'after')
+            yClass = 'bottom'
+
+        return `${positionClassNames.main || ''} ${positionClassNames[xClass] || '' } ${positionClassNames[yClass] || '' } ${className || ''}`
     }
 
     receiveRef = (ref) => {
@@ -95,28 +139,62 @@ export default class AutoPosition extends Component {
             return
 
         const {
-            maxPositionUpdateTries = 2,
+            maxPositionUpdateTries = 3,
         } = this.props
 
         if (this.state.positionUpdateCount >= maxPositionUpdateTries)
             return
 
-        var containerX = getElementX(this.container)
-        var containerRightX = getElementRightX(this.container, containerX)
-        var containerY = getElementY(this.container)
-        var containerBottomY = getElementBottomY(this.container, containerY)
+        const containerX = getElementX(this.container)
+        const containerRightX = getElementRightX(this.container, containerX)
+        const containerY = getElementY(this.container)
+        const containerBottomY = getElementBottomY(this.container, containerY)
 
-        var left = isOncreenX(containerX) && (this.state.left || !isOncreenX(containerRightX - 1))
-        var top = isOncreenY(containerY) && (this.state.top || !isOncreenY(containerBottomY - 1))
+        var {
+            x,
+            y,
+            allowXCenter,
+            allowYCenter,
+        } = this.state
 
-        if (left !== this.state.left || top !== this.state.top) {
+        x = getPosition(x, allowXCenter, isOncreenX, containerX, containerRightX)
+        y = getPosition(y, allowYCenter, isOncreenY, containerY, containerBottomY)
+
+        if (x !== this.state.x || y !== this.state.y) {
             this.setState(state => ({
-                left,
-                top,
+                x,
+                y,
                 positionUpdateCount: state.positionUpdateCount + 1
             }))
         }
 
     }
 
+}
+
+function getPosition(current, allowCenter, isOncreen, startPos, endPos) {
+
+    if (current === 'before') {
+        if (isOncreen(startPos))
+            return current
+        return allowCenter ? 'center' : 'after'
+    }
+
+    if (current === 'center') {
+        // this assumes the center positiong is made with a CSS transform (translate 50% on desired axis)
+        const posOffset = (endPos - startPos) / 2
+        if (!isOncreen(endPos - 1 - posOffset))
+            return 'before'
+        if (!isOncreen(startPos - posOffset))
+            return 'after'
+        return current
+    }
+
+    if (current === 'after') {
+        if (isOncreen(endPos - 1))
+            return current
+        return 'before'
+    }
+
+    return current
 }
