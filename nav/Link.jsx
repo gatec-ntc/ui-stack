@@ -18,7 +18,7 @@ const OptionalLink = props => {
 
     if (href) {
         if (internal) {
-            return <a href={href} {...otherProps} />
+            return <a href={href} target={target} {...otherProps} />
         } else {
             return <OutboundLink eventLabel={eventLabel || otherProps.title || href} to={href} target={target || '_blank'} {...otherProps} />
         }
