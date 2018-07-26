@@ -10,9 +10,7 @@ const dateFormats = {
     fulltime: { hour: '2-digit', minute: '2-digit', second: '2-digit' },
 }
 
-export default formatDate
-
-export function formatDate(date, opt = {}) {
+export default function formatDate(date, opt = {}) {
     const intl = getIntl()
     if (!intl)
         return date.toString()

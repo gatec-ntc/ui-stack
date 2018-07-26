@@ -10,9 +10,7 @@ class KeyWrapper extends PureComponent {
     }
 }
 
-export default formatMessage
-
-export function formatMessage(key, values, opt = {}) {
+export default function formatMessage(key, values, opt = {}) {
     if (!key)
         return ''
     const intl = getIntl()
