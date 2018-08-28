@@ -10,9 +10,14 @@ class KeyWrapper extends PureComponent {
     }
 }
 
+function isReactElement(element) {
+    return typeof element === 'object' && React.isValidElement(element)
+}
+
 export default function formatMessage(key, values, opt = {}) {
     if (!key)
         return ''
+
     const intl = getIntl()
     if (!intl)
         return key
@@ -20,27 +25,26 @@ export default function formatMessage(key, values, opt = {}) {
     const finalOpt = Object.assign({ id: key }, opt)
 
     if (values) {
-        let hasElements = false
-        let newValues = {}
 
-        Object.keys(values).forEach(v => {
+        let hasElements = Object
+            .values(values)
+            .some(isReactElement)
 
-            let element = values[v]
-            if (typeof element !== 'object')
-                return
+        if (hasElements) {
+            let newValues = Array.isArray(values) ? [] : {}
 
-            hasElements = true
+            Object.keys(values).forEach(v => {
 
-            if (React.isValidElement(element) && !element.key) {
-                newValues[v] = <KeyWrapper key={`l_${key}_${v}`}>{element}</KeyWrapper>
-            } else {
-                newValues[v] = element
-            }
+                if (isReactElement(element) && !element.key) {
+                    newValues[v] = <KeyWrapper key={`l_${key}_${v}`}>{element}</KeyWrapper>
+                } else {
+                    newValues[v] = element
+                }
 
-        })
+            })
 
-        if (hasElements)
             return <FormattedMessage {...finalOpt} values={newValues} />
+        }
     }
 
     return intl.formatMessage(finalOpt, values)
