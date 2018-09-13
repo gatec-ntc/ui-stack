@@ -36,7 +36,8 @@
     "intl-locales-supported": "^1.0.0",
     "react-ga": "^2.5.3",
     "react-intl": "^2.3.0",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "react-transition-group": "^2.4.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.5",
