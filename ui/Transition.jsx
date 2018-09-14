@@ -11,10 +11,11 @@ export function withTransition(extraProps) {
 
             const {
                 active,
+                transition,
             } = this.props
 
             return (
-                <Transition appear mountOnEnter unmountOnExit onEnter={fixTransition} {...extraProps} in={active}>
+                <Transition appear mountOnEnter unmountOnExit onEnter={fixTransition} {...extraProps} {...transition} in={active}>
                     {this.renderComponent}
                 </Transition>
             )
@@ -23,7 +24,10 @@ export function withTransition(extraProps) {
         renderComponent = (state) => {
 
             const {
-                active, // eslint-disable-line no-unused-vars
+                /* eslint-disable no-unused-vars */
+                active,
+                transition,
+                /* eslint-enable no-unused-vars */
                 ...otherProps
             } = this.props
 
